@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Gestión de Flota EXOR</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- TOGGLE BUTTON PARA MÓVIL -->
+    <button class="sidebar-toggle" id="toggleSidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <!-- HEADER -->
+        <div class="sidebar-header">
+            <div class="sidebar-logo">EX</div>
+            <div class="sidebar-title">
+                <h2>EXOR</h2>
+                <p>Gestión de Flota</p>
+            </div>
+        </div>
+
+        <!-- CONTENIDO DEL SIDEBAR -->
+        <div class="sidebar-content">
+            <!-- MENU PRINCIPAL -->
+            <div class="menu-section">
+                <div class="section-title">NAVEGACIÓN</div>
+
+                <div class="menu-item active" onclick="selectMenu(this, 'resumen')">
+                    <i class="fas fa-chart-pie"></i>
+                    <span class="menu-item-label">Resumen General</span>
+                </div>
+
+                <div class="menu-item" onclick="toggleSubmenu(this, 'inventario')">
+                    <i class="fas fa-boxes"></i>
+                    <span class="menu-item-label">Inventario Equipos</span>
+                </div>
+                <div class="submenu" id="submenu-inventario">
+                    <div class="submenu-item" onclick="selectMenu(this, 'ver-equipos')">
+                        Ver Todos
+                    </div>
+                    <div class="submenu-item" onclick="selectMenu(this, 'equipos-activos')">
+                        Equipos Activos
+                    </div>
+                    <div class="submenu-item" onclick="selectMenu(this, 'mantenimiento')">
+                        En Mantenimiento
+                    </div>
+                </div>
+
+                <div class="menu-item" onclick="selectMenu(this, 'conductores')">
+                    <i class="fas fa-users"></i>
+                    <span class="menu-item-label">Conductores</span>
+                </div>
+
+                <div class="menu-item" onclick="selectMenu(this, 'alertas')">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="menu-item-label">Alertas de Uso</span>
+                    <span class="menu-badge badge-danger">7</span>
+                </div>
+            </div>
+
+            <!-- MENU POR LÍNEA -->
+            <div class="menu-section">
+                <div class="section-title">POR LÍNEA</div>
+
+                <div class="menu-item" onclick="selectMenu(this, 'linea-amarilla')">
+                    <i class="fas fa-circle" style="color: #fbbf24; font-size: 12px;"></i>
+                    <span class="menu-item-label">Línea Amarilla</span>
+                    <span class="menu-badge badge-yellow">18</span>
+                </div>
+
+                <div class="menu-item" onclick="selectMenu(this, 'linea-blanca')">
+                    <i class="fas fa-circle" style="color: #60a5fa; font-size: 12px;"></i>
+                    <span class="menu-item-label">Línea Blanca</span>
+                    <span class="menu-badge badge-blue">34</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- USUARIO -->
+        <div class="sidebar-user" onclick="openUserMenu()">
+            <div class="user-avatar">JM</div>
+            <div class="user-info">
+                <h3>Jefe de Flota</h3>
+                <p>EXORS A.C.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="main-content">
+        <div class="content-header">
+            <h1 id="pageTitle">📊 Resumen General</h1>
+            <p id="pageDescription">Visualiza el estado general de tu flota de equipos</p>
+        </div>
+
+        <!-- CONTENIDO DINÁMICO -->
+        <div id="contentArea"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
