@@ -662,78 +662,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ===================== FUNCIONES AUXILIARES =====================
 
-def detectar_tipo_columna(serie):
-    """Detecta el tipo de dato de una columna"""
-    if serie.dtype == 'object':
-        try:
-            pd.to_datetime(serie)
-            return 'fecha'
-        except:
-            return 'categórica'
-    elif pd.api.types.is_numeric_dtype(serie):
-        return 'numérica'
-    return 'otra'
-
-def generar_graficos_automaticos(df, columnas_numericas, columnas_categoricas):
-    """Genera gráficos basados en el tipo de dato"""
-    graficos = []
-    
-    # Gráficos para columnas numéricas
-    if len(columnas_numericas) > 0:
-        for col in columnas_numericas[:4]:  # Máximo 4 gráficos
-            try:
-                fig = px.histogram(
-                    df,
-                    x=col,
-                    nbins=30,
-                    title=f"📊 Distribución de {col}",
-                    color_discrete_sequence=['#667eea']
-                )
-                fig.update_layout(
-                    template="plotly_white",
-                    hovermode='x unified',
-                    height=400
-                )
-                graficos.append(("numérica", col, fig))
-            except:
-                pass
-    
-    # Gráficos para columnas categóricas
-    if len(columnas_categoricas) > 0:
-        for col in columnas_categoricas[:3]:  # Máximo 3 gráficos
-            try:
-                valor_counts = df[col].value_counts().head(10)
-                fig = px.bar(
-                    x=valor_counts.index,
-                    y=valor_counts.values,
-                    title=f"📈 Conteo: {col}",
-                    labels={'x': col, 'y': 'Cantidad'},
-                    color_discrete_sequence=['#764ba2']
-                )
-                fig.update_layout(
-                    template="plotly_white",
-                    hovermode='x unified',
-                    height=400,
-                    showlegend=False
-                )
-                graficos.append(("categórica", col, fig))
-            except:
-                pass
-    
-    return graficos
-
-def calcular_estadisticas(df):
-    """Calcula estadísticas principales"""
-    stats = {
-        'filas': len(df),
-        'columnas': len(df.columns),
-        'valores_nulos': df.isnull().sum().sum(),
-        'columnas_numericas': df.select_dtypes(include=[np.number]).columns.tolist(),
-        'columnas_categoricas': df.select_dtypes(include=['object']).columns.tolist()
-    }
-    return stats
 
 # ===================== INTERFAZ PRINCIPAL =====================
 
