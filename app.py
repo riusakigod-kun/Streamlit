@@ -11,11 +11,12 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ===================== CSS PERSONALIZADO =====================
+# ===================== CSS PERSONALIZADO CON BOOTSTRAP =====================
 st.markdown("""
-    <style>
-    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <style>
     * {
         margin: 0;
         padding: 0;
@@ -23,169 +24,253 @@ st.markdown("""
     }
 
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: #f8f9fa;
     }
 
-    /* ============ MAIN LAYOUT ============ */
-    .main {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        padding: 0 !important;
-    }
-
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #1a202c 0%, #0f1419 100%) !important;
-        padding: 0 !important;
+    /* ============ COLORES PRINCIPALES ============ */
+    :root {
+        --primary: #ff8c00;
+        --secondary: #1e40af;
+        --success: #10b981;
+        --danger: #ef4444;
+        --warning: #f59e0b;
+        --dark: #1f2937;
+        --light: #f3f4f6;
     }
 
     /* ============ SIDEBAR STYLING ============ */
-    [data-testid="stSidebar"] > div:first-child {
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #1f2937 0%, #111827 100%) !important;
         padding: 0 !important;
     }
 
-    .sidebar-header {
-        background: rgba(102, 126, 234, 0.1);
-        padding: 20px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        align-items: center;
-        gap: 12px;
+    /* ============ MAIN CONTENT ============ */
+    .main {
+        background: #f8f9fa !important;
     }
 
-    .sidebar-logo {
-        width: 45px;
-        height: 45px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 10px;
+    /* ============ HEADER DASHBOARD ============ */
+    .dashboard-header {
+        background: white;
+        padding: 25px 30px;
+        border-bottom: 1px solid #e5e7eb;
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        font-size: 20px;
+        margin-bottom: 30px;
     }
 
-    .sidebar-title h2 {
-        color: white;
-        font-size: 16px;
+    .dashboard-header h1 {
+        color: #1f2937;
+        font-size: 28px;
+        font-weight: 700;
         margin: 0;
     }
 
-    .sidebar-title p {
-        color: #cbd5e0;
-        font-size: 12px;
-        margin: 2px 0 0 0;
+    .dashboard-header p {
+        color: #6b7280;
+        font-size: 14px;
+        margin: 5px 0 0 0;
     }
 
-    /* ============ MENU STYLING ============ */
-    [data-testid="stSidebar"] .stSelectbox, 
-    [data-testid="stSidebar"] .stButton {
-        margin: 5px 0;
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #dcfce7;
+        color: #166534;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
     }
 
-    [data-testid="stSidebar"] button {
-        width: 100%;
-        padding: 12px 20px !important;
-        text-align: left !important;
-        color: #cbd5e0 !important;
-        font-size: 14px !important;
-        border: none !important;
-        background: transparent !important;
-        border-left: 3px solid transparent !important;
-        margin: 4px 0 !important;
-        transition: all 0.3s ease !important;
+    .status-badge::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
     }
 
-    [data-testid="stSidebar"] button:hover {
-        background: rgba(102, 126, 234, 0.2) !important;
-        color: white !important;
-        border-left-color: #667eea !important;
-        padding-left: 24px !important;
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
     }
 
-    /* ============ MAIN CONTENT ============ */
-    .content-header {
-        background: white;
-        border-radius: 15px;
-        padding: 30px;
-        margin: 40px 30px 30px 30px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .content-header h1 {
-        color: #667eea;
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
-
-    .content-header p {
-        color: #718096;
-        font-size: 1.1rem;
-    }
-
+    /* ============ METRIC CARDS ============ */
     .metric-card {
         background: white;
         border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        border-left: 4px solid #667eea;
-        transition: transform 0.3s, box-shadow 0.3s;
+        padding: 22px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .metric-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border-color: var(--primary);
     }
 
-    .chart-container {
+    .metric-card.orange {
+        border-top: 4px solid var(--primary);
+    }
+
+    .metric-card.blue {
+        border-top: 4px solid var(--secondary);
+    }
+
+    .metric-card.green {
+        border-top: 4px solid var(--success);
+    }
+
+    .metric-card.red {
+        border-top: 4px solid var(--danger);
+    }
+
+    .metric-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0;
+    }
+
+    .metric-label {
+        font-size: 14px;
+        color: #6b7280;
+        margin: 8px 0 0 0;
+        font-weight: 500;
+    }
+
+    /* ============ CHART CONTAINERS ============ */
+    .chart-card {
         background: white;
-        padding: 20px;
         border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        padding: 24px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        margin-bottom: 25px;
+    }
+
+    .chart-card h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
         margin-bottom: 20px;
     }
 
+    .chart-card p {
+        font-size: 13px;
+        color: #6b7280;
+        margin: 0;
+    }
+
+    /* ============ TABLE STYLING ============ */
     .data-table {
         background: white;
         border-radius: 12px;
+        border: 1px solid #e5e7eb;
         overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead {
+        background: #f3f4f6;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .table thead th {
+        color: #374151;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 16px;
+    }
+
+    .table tbody td {
+        padding: 16px;
+        border-bottom: 1px solid #f3f4f6;
+        color: #374151;
+        font-size: 14px;
+    }
+
+    .table tbody tr:hover {
+        background: #f9fafb;
     }
 
     /* ============ BADGES ============ */
-    .badge {
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 20px;
+    .badge-status {
+        padding: 6px 12px;
+        border-radius: 12px;
         font-size: 12px;
         font-weight: 600;
-        margin-left: 8px;
     }
 
-    .badge-danger {
-        background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+    .badge-success-custom {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .badge-warning-custom {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .badge-danger-custom {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .badge-info-custom {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+
+    /* ============ BUTTONS ============ */
+    .btn-primary-custom {
+        background: var(--primary);
         color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
     }
 
-    .badge-yellow {
-        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-        color: #1a202c;
-    }
-
-    .badge-blue {
-        background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-        color: white;
+    .btn-primary-custom:hover {
+        background: #e67e00;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,140,0,0.2);
     }
 
     /* ============ RESPONSIVE ============ */
     @media (max-width: 768px) {
-        .content-header {
-            margin: 20px !important;
-            padding: 20px !important;
+        .dashboard-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
         }
 
-        .content-header h1 {
-            font-size: 1.5rem;
+        .metric-value {
+            font-size: 24px;
+        }
+
+        .chart-card {
+            padding: 16px;
         }
     }
     </style>
@@ -361,63 +446,128 @@ with st.sidebar:
 def mostrar_resumen():
     """Muestra el resumen general"""
     st.markdown("""
-        <div class="content-header">
-            <h1>📊 Resumen General</h1>
-            <p>Visualiza el estado general de tu flota de equipos</p>
+        <div class="dashboard-header">
+            <div>
+                <h1>📊 Panel General de Flota</h1>
+                <p>Marzo 2025 · Resumen completo de operaciones</p>
+            </div>
+            <div class="status-badge">
+                ● En vivo
+            </div>
         </div>
     """, unsafe_allow_html=True)
     
+    # Métricas principales
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.metric("📊 Total Equipos", "42", "Flota disponible")
+        st.markdown("""
+            <div class="metric-card orange">
+                <p class="metric-value">3,308h</p>
+                <p class="metric-label">AMARILLA TOTAL</p>
+            </div>
+        """, unsafe_allow_html=True)
     
     with col2:
-        st.metric("✅ Equipos Activos", "35", "83.3%")
+        st.markdown("""
+            <div class="metric-card blue">
+                <p class="metric-value">6,306h</p>
+                <p class="metric-label">BLANCA TOTAL</p>
+            </div>
+        """, unsafe_allow_html=True)
     
     with col3:
-        st.metric("⚙️ En Mantenimiento", "5", "11.9%")
+        st.markdown("""
+            <div class="metric-card green">
+                <p class="metric-value">184h</p>
+                <p class="metric-label">PROM. EQUIPO</p>
+            </div>
+        """, unsafe_allow_html=True)
     
     with col4:
-        st.metric("❌ Inactivos", "2", "4.8%")
+        st.markdown("""
+            <div class="metric-card red">
+                <p class="metric-value">226h</p>
+                <p class="metric-label">MAX. REGISTRADA</p>
+            </div>
+        """, unsafe_allow_html=True)
     
-    # Gráficos de ejemplo
+    # Gráficos
+    st.markdown("<br>", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     
     with col1:
-        data_estado = pd.DataFrame({
-            'Estado': ['Activo', 'Mantenimiento', 'Inactivo'],
-            'Cantidad': [35, 5, 2]
+        st.markdown("""
+            <div class="chart-card">
+                <h3>⏱️ Horas operativas por semana</h3>
+                <p>Línea amarilla vs línea blanca · Marzo 2025</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        data_horas = pd.DataFrame({
+            'Semana': ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+            'Amarilla': [700, 750, 850, 800],
+            'Blanca': [1050, 900, 1100, 1000]
         })
-        fig = px.pie(
-            data_estado,
-            values='Cantidad',
-            names='Estado',
-            title='Distribución por Estado'
+        
+        fig = px.bar(
+            data_horas,
+            x='Semana',
+            y=['Amarilla', 'Blanca'],
+            title=None,
+            color_discrete_map={'Amarilla': '#ff8c00', 'Blanca': '#1e40af'},
+            barmode='group'
+        )
+        fig.update_layout(
+            template="plotly_white",
+            height=350,
+            showlegend=True,
+            hovermode='x unified',
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            margin=dict(b=30, l=40, r=20, t=30)
         )
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
-        data_linea = pd.DataFrame({
-            'Línea': ['Amarilla', 'Blanca'],
-            'Cantidad': [18, 24]
+        st.markdown("""
+            <div class="chart-card">
+                <h3>📊 Distribución de flota</h3>
+                <p>Por tipo de equipo</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        data_flota = pd.DataFrame({
+            'Tipo': ['Amarilla 35%', 'Camionetas 42%', 'Coasters 23%'],
+            'Valor': [35, 42, 23]
         })
-        fig = px.bar(
-            data_linea,
-            x='Línea',
-            y='Cantidad',
-            title='Equipos por Línea'
+        
+        fig = px.pie(
+            data_flota,
+            values='Valor',
+            names='Tipo',
+            color_discrete_sequence=['#ff8c00', '#1e40af', '#10b981'],
+            hole=0.4
+        )
+        fig.update_layout(
+            height=350,
+            margin=dict(b=30, l=40, r=20, t=30)
         )
         st.plotly_chart(fig, use_container_width=True)
 
 def mostrar_inventario():
     """Muestra el inventario de equipos"""
     st.markdown("""
-        <div class="content-header">
-            <h1>📦 Inventario de Equipos</h1>
-            <p>Ver todos los equipos registrados en el sistema</p>
+        <div class="dashboard-header">
+            <div>
+                <h1>📦 Inventario de Equipos</h1>
+                <p>Gestión completa de la flota</p>
+            </div>
         </div>
     """, unsafe_allow_html=True)
+    
+    # Filtros
+    col1, col2, col3 = st.columns(3)
     
     data = {
         'ID': ['CM-001', 'CM-002', 'CM-003', 'CM-004', 'CM-005'],
@@ -429,12 +579,11 @@ def mostrar_inventario():
     
     df_equipos = pd.DataFrame(data)
     
-    col1, col2 = st.columns(2)
     with col1:
-        filtro_estado = st.selectbox("Filtrar por Estado:", ['Todos'] + df_equipos['Estado'].unique().tolist())
+        filtro_estado = st.selectbox("Filtrar por Estado:", ['Todos'] + df_equipos['Estado'].unique().tolist(), key="inv_estado")
     
     with col2:
-        filtro_empresa = st.selectbox("Filtrar por Empresa:", ['Todos'] + df_equipos['Empresa'].unique().tolist())
+        filtro_empresa = st.selectbox("Filtrar por Empresa:", ['Todos'] + df_equipos['Empresa'].unique().tolist(), key="inv_empresa")
     
     if filtro_estado != 'Todos':
         df_equipos = df_equipos[df_equipos['Estado'] == filtro_estado]
@@ -442,27 +591,90 @@ def mostrar_inventario():
     if filtro_empresa != 'Todos':
         df_equipos = df_equipos[df_equipos['Empresa'] == filtro_empresa]
     
-    st.dataframe(df_equipos, use_container_width=True, hide_index=True)
+    # Tabla profesional
+    st.markdown('<div class="data-table">', unsafe_allow_html=True)
+    html_table = f"""
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID Equipo</th>
+                <th>Modelo</th>
+                <th>Empresa</th>
+                <th>Estado</th>
+                <th>Responsable</th>
+            </tr>
+        </thead>
+        <tbody>
+    """
+    
+    for _, row in df_equipos.iterrows():
+        estado_badge = {
+            'Activo': 'badge-success-custom',
+            'Mantenimiento': 'badge-warning-custom',
+            'Inactivo': 'badge-danger-custom'
+        }.get(row['Estado'], 'badge-info-custom')
+        
+        html_table += f"""
+        <tr>
+            <td><strong>{row['ID']}</strong></td>
+            <td>{row['Modelo']}</td>
+            <td>{row['Empresa']}</td>
+            <td><span class="badge-status {estado_badge}">{row['Estado']}</span></td>
+            <td>{row['Responsable']}</td>
+        </tr>
+        """
+    
+    html_table += "</tbody></table>"
+    st.markdown(html_table, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 def mostrar_conductores():
     """Muestra información de conductores"""
     st.markdown("""
-        <div class="content-header">
-            <h1>👥 Gestión de Conductores</h1>
-            <p>Personal autorizado para operar equipos</p>
+        <div class="dashboard-header">
+            <div>
+                <h1>👥 Gestión de Conductores</h1>
+                <p>Personal autorizado para operar equipos</p>
+            </div>
         </div>
     """, unsafe_allow_html=True)
     
-    col1, col2, col3 = st.columns(3)
+    # KPIs
+    col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.metric("👤 Total Conductores", "12", "Personal activo")
+        st.markdown("""
+            <div class="metric-card orange">
+                <p class="metric-value">12</p>
+                <p class="metric-label">TOTAL CONDUCTORES</p>
+            </div>
+        """, unsafe_allow_html=True)
     
     with col2:
-        st.metric("✅ Licencias Vigentes", "11", "91.7%")
+        st.markdown("""
+            <div class="metric-card green">
+                <p class="metric-value">11</p>
+                <p class="metric-label">LICENCIAS VIGENTES</p>
+            </div>
+        """, unsafe_allow_html=True)
     
     with col3:
-        st.metric("⚠️ Por Vencer", "1", "8.3%")
+        st.markdown("""
+            <div class="metric-card red">
+                <p class="metric-value">1</p>
+                <p class="metric-label">POR VENCER</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    with col4:
+        st.markdown("""
+            <div class="metric-card blue">
+                <p class="metric-value">3</p>
+                <p class="metric-label">CLIENTES</p>
+            </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
     
     conductores = pd.DataFrame({
         'Nombre': ['Pedro Mamani', 'Félix Arce', 'Hugo Chura', 'Juan Flores', 'Carlos Mamani'],
@@ -471,21 +683,45 @@ def mostrar_conductores():
         'Equipos': [3, 2, 2, 2, 1]
     })
     
-    st.dataframe(conductores, use_container_width=True, hide_index=True)
+    st.markdown('<div class="data-table">', unsafe_allow_html=True)
+    html_table = """
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre del Conductor</th>
+                <th>Rol</th>
+                <th>Estado Licencia</th>
+                <th>Equipos Asignados</th>
+            </tr>
+        </thead>
+        <tbody>
+    """
+    
+    for _, row in conductores.iterrows():
+        estado_badge = 'badge-success-custom' if row['Licencia'] == 'Vigente' else 'badge-warning-custom'
+        html_table += f"""
+        <tr>
+            <td><strong>{row['Nombre']}</strong></td>
+            <td>{row['Rol']}</td>
+            <td><span class="badge-status {estado_badge}">{row['Licencia']}</span></td>
+            <td><strong>{row['Equipos']}</strong></td>
+        </tr>
+        """
+    
+    html_table += "</tbody></table>"
+    st.markdown(html_table, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 def mostrar_alertas():
     """Muestra alertas del sistema"""
     st.markdown("""
-        <div class="content-header">
-            <h1>⚠️ Alertas Críticas</h1>
-            <p>Alertas activas del sistema</p>
+        <div class="dashboard-header">
+            <div>
+                <h1>⚠️ Alertas Críticas</h1>
+                <p>Incidentes activos del sistema</p>
+            </div>
         </div>
     """, unsafe_allow_html=True)
-    
-    # Alertas
-    st.error("🔴 **CRÍTICO:** CM-007 necesita mantenimiento urgente")
-    st.warning("🟠 **ADVERTENCIA:** CM-001 ha operado 12 horas sin descanso")
-    st.info("🟡 **INFORMACIÓN:** CM-004 combustible bajo - 15% del tanque")
     
     alertas_df = pd.DataFrame({
         'Equipo': ['CM-007', 'CM-001', 'CM-004', 'CM-012', 'CM-019', 'CM-025', 'CM-031'],
@@ -493,14 +729,47 @@ def mostrar_alertas():
         'Severidad': ['Crítico', 'Advertencia', 'Información', 'Advertencia', 'Información', 'Crítico', 'Advertencia']
     })
     
-    st.dataframe(alertas_df, use_container_width=True, hide_index=True)
+    st.markdown('<div class="data-table">', unsafe_allow_html=True)
+    html_alerts = """
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Equipo</th>
+                <th>Tipo de Alerta</th>
+                <th>Severidad</th>
+            </tr>
+        </thead>
+        <tbody>
+    """
+    
+    for _, row in alertas_df.iterrows():
+        badge_map = {
+            'Crítico': 'badge-danger-custom',
+            'Advertencia': 'badge-warning-custom',
+            'Información': 'badge-info-custom'
+        }
+        badge_class = badge_map.get(row['Severidad'], 'badge-info-custom')
+        
+        html_alerts += f"""
+        <tr>
+            <td><strong>{row['Equipo']}</strong></td>
+            <td>{row['Tipo']}</td>
+            <td><span class="badge-status {badge_class}">{row['Severidad']}</span></td>
+        </tr>
+        """
+    
+    html_alerts += "</tbody></table>"
+    st.markdown(html_alerts, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 def mostrar_carga_datos():
     """Muestra la interfaz de carga de datos"""
     st.markdown("""
-        <div class="content-header">
-            <h1>📤 Cargar y Analizar Datos</h1>
-            <p>Sube tu archivo Excel o CSV para análisis automático</p>
+        <div class="dashboard-header">
+            <div>
+                <h1>📤 Cargar y Analizar Datos</h1>
+                <p>Sube tu archivo Excel o CSV para análisis automático</p>
+            </div>
         </div>
     """, unsafe_allow_html=True)
     
@@ -511,7 +780,7 @@ def mostrar_carga_datos():
             else:
                 df = pd.read_excel(archivo)
             
-            st.success(f"✅ Archivo cargado correctamente - {len(df)} filas detectadas")
+            st.success(f"✅ Archivo cargado - {len(df)} filas detectadas")
             
             stats = calcular_estadisticas(df)
             
@@ -519,20 +788,40 @@ def mostrar_carga_datos():
             col1, col2, col3, col4 = st.columns(4)
             
             with col1:
-                st.metric("📋 Filas", f"{stats['filas']:,}")
+                st.markdown(f"""
+                    <div class="metric-card blue">
+                        <p class="metric-value">{stats['filas']:,}</p>
+                        <p class="metric-label">FILAS</p>
+                    </div>
+                """, unsafe_allow_html=True)
             
             with col2:
-                st.metric("🏷️ Columnas", f"{stats['columnas']}")
+                st.markdown(f"""
+                    <div class="metric-card orange">
+                        <p class="metric-value">{stats['columnas']}</p>
+                        <p class="metric-label">COLUMNAS</p>
+                    </div>
+                """, unsafe_allow_html=True)
             
             with col3:
-                porcentaje_nulos = (stats['valores_nulos'] / (stats['filas'] * stats['columnas']) * 100)
-                st.metric("⚠️ Valores Nulos", f"{porcentaje_nulos:.1f}%")
+                porcentaje_nulos = (stats['valores_nulos'] / (stats['filas'] * stats['columnas']) * 100) if (stats['filas'] * stats['columnas']) > 0 else 0
+                st.markdown(f"""
+                    <div class="metric-card red">
+                        <p class="metric-value">{porcentaje_nulos:.1f}%</p>
+                        <p class="metric-label">VALORES NULOS</p>
+                    </div>
+                """, unsafe_allow_html=True)
             
             with col4:
-                st.metric("✨ Calidad", f"{100 - porcentaje_nulos:.1f}%")
+                st.markdown(f"""
+                    <div class="metric-card green">
+                        <p class="metric-value">{100 - porcentaje_nulos:.1f}%</p>
+                        <p class="metric-label">CALIDAD</p>
+                    </div>
+                """, unsafe_allow_html=True)
             
-            # Gráficos automáticos
-            st.markdown("### 📈 Análisis Visual Automático")
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.markdown('<div class="chart-card"><h3>📈 Análisis Visual Automático</h3></div>', unsafe_allow_html=True)
             
             graficos = generar_graficos_automaticos(
                 df,
@@ -541,22 +830,32 @@ def mostrar_carga_datos():
             )
             
             if graficos:
+                col1, col2 = st.columns(2)
                 for i, (tipo, columna, fig) in enumerate(graficos):
-                    if i % 2 == 0:
-                        col1, col2 = st.columns(2)
-                    
                     with (col1 if i % 2 == 0 else col2):
                         st.plotly_chart(fig, use_container_width=True)
             
-            # Tabla de datos
             if mostrar_tabla:
-                st.markdown("### 📋 Vista de Datos")
+                st.markdown('<div class="chart-card"><h3>📋 Vista de Datos</h3></div>', unsafe_allow_html=True)
+                st.markdown('<div class="data-table">', unsafe_allow_html=True)
                 st.dataframe(df.head(20), use_container_width=True, hide_index=True)
+                st.markdown('</div>', unsafe_allow_html=True)
         
-        except Exception as e:
-            st.error(f"❌ Error al procesar archivo: {str(e)}")
+        except Exception:
+            st.error("❌ Error al procesar archivo")
+            st.info("Verifica que el archivo esté en el formato correcto")
     else:
-        st.info("👆 Por favor sube un archivo Excel o CSV para comenzar")
+        st.markdown("""
+            <div style="text-align: center; padding: 40px; background: white; border-radius: 12px; margin-top: 20px;">
+                <h2 style="color: #ff8c00; margin-bottom: 15px;">📁 Selecciona un archivo</h2>
+                <p style="color: #6b7280; margin-bottom: 20px;">Soporta Excel (.xlsx, .xls) y CSV</p>
+                <div style="color: #6b7280; font-size: 14px;">
+                    ✅ Análisis automático de datos<br>
+                    ✅ Gráficos dinámicos<br>
+                    ✅ Exportación de resultados
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
 
 # ===================== ROUTER PRINCIPAL =====================
 
