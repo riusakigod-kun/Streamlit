@@ -1,10 +1,8 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 from datetime import datetime
 import numpy as np
-from pathlib import Path
 
 # ===================== CONFIGURACIÓN =====================
 st.set_page_config(
@@ -201,7 +199,7 @@ def detectar_tipo_columna(serie):
         try:
             pd.to_datetime(serie)
             return 'fecha'
-        except:
+        except (TypeError, ValueError):
             return 'categórica'
     elif pd.api.types.is_numeric_dtype(serie):
         return 'numérica'
@@ -228,7 +226,7 @@ def generar_graficos_automaticos(df, columnas_numericas, columnas_categoricas):
                     height=400
                 )
                 graficos.append(("numérica", col, fig))
-            except:
+            except Exception:
                 pass
     
     # Gráficos para columnas categóricas
@@ -250,7 +248,7 @@ def generar_graficos_automaticos(df, columnas_numericas, columnas_categoricas):
                     showlegend=False
                 )
                 graficos.append(("categórica", col, fig))
-            except:
+            except Exception:
                 pass
     
     return graficos
@@ -840,11 +838,11 @@ if archivo is not None:
             )
         
         with col2:
-            buffer = pd.ExcelWriter(f"temp_export.xlsx", engine='openpyxl')
+            buffer = pd.ExcelWriter("temp_export.xlsx", engine='openpyxl')
             df.to_excel(buffer, sheet_name='Datos', index=False)
             st.download_button(
                 label="📥 Descargar Excel",
-                data=open(f"temp_export.xlsx", "rb").read() if False else b'',
+                data=b'',
                 file_name=f"datos_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
@@ -857,8 +855,8 @@ if archivo is not None:
                 mime="text/plain"
             )
 
-    except Exception as e:
-        st.error(f"❌ Error al procesar archivo: {str(e)}")
+except Exception:
+            st.error("❌ Error al procesar archivo")
         st.info("Verifica que el archivo esté en el formato correcto")
 
 else:
